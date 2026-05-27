@@ -1,23 +1,19 @@
 import logging
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 # ══════════════════════════════════════════
-#  এখানে আপনার নতুন BOT TOKEN বসান
 BOT_TOKEN = "8835737635:AAEo-us5MJiP1ZUEUFvbp-CNNsFTBakuP3s"
-
-#  আপনার Private Group ID
-GROUP_ID = -1003978616422
+GROUP_ID = int(os.environ.get("GROUP_ID", "-1003978616422"))
 # ══════════════════════════════════════════
 
 logging.basicConfig(level=logging.INFO)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
-    args = context.args  # start parameter (message ID)
-
+    args = context.args
     if args:
-        # Website থেকে এসেছে - message ID দিয়ে ভিডিও forward করো
         try:
             msg_id = int(args[0])
             await context.bot.forward_message(
@@ -31,7 +27,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             logging.error(f"Forward error: {e}")
     else:
-        # সরাসরি বটে এসেছে
         await update.message.reply_text(
             f"👋 হ্যালো {user.first_name}!\n\n"
             "🎬 Vairal Video ওয়েবসাইট থেকে ডাউনলোড করুন:\n"
