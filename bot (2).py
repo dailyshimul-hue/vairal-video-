@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 
 # ══════════════════════════════════════════
 #  এখানে আপনার নতুন BOT TOKEN বসান
-BOT_TOKEN = "আপনার_নতুন_TOKEN_এখানে"
+BOT_TOKEN = "8835737635:AAEo-us5MJiP1ZUEUFvbp-CNNsFTBakuP3s"
 
 #  আপনার Private Group ID
 GROUP_ID = -1003978616422
