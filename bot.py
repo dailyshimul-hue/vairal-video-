@@ -3,10 +3,8 @@ import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
-# ══════════════════════════════════════════
 BOT_TOKEN = "8835737635:AAEo-us5MJiP1ZUEUFvbp-CNNsFTBakuP3s"
 GROUP_ID = int(os.environ.get("GROUP_ID", "-1003978616422"))
-# ══════════════════════════════════════════
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,23 +12,25 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     args = context.args
     if args:
+        param = args[0]
         try:
-            msg_id = int(args[0])
+            msg_id = int(param)
             await context.bot.forward_message(
                 chat_id=user.id,
                 from_chat_id=GROUP_ID,
                 message_id=msg_id
             )
+            logging.info(f"✅ Sent msg {msg_id} to {user.id}")
+        except ValueError:
+            await update.message.reply_text("❌ ভুল লিংক। ওয়েবসাইট থেকে ডাউনলোড করুন।")
         except Exception as e:
-            await update.message.reply_text(
-                "❌ ভিডিও পাঠাতে সমস্যা হয়েছে। একটু পরে চেষ্টা করুন।"
-            )
+            await update.message.reply_text("❌ ভিডিও পাঠাতে সমস্যা হয়েছে। একটু পরে চেষ্টা করুন।")
             logging.error(f"Forward error: {e}")
     else:
         await update.message.reply_text(
             f"👋 হ্যালো {user.first_name}!\n\n"
-            "🎬 Vairal Video ওয়েবসাইট থেকে ডাউনলোড করুন:\n"
-            "👉 আপনার সাইটের লিংক দিন এখানে\n\n"
+            "🎬 Vairal Video ওয়েবসাইট থেকে ভিডিও ডাউনলোড করুন:\n"
+            "👉 https://soft-cucurucho-f9cc45.netlify.app\n\n"
             "📢 আমাদের চ্যানেল: https://t.me/+mnRNVatANUk5MTZl"
         )
 
